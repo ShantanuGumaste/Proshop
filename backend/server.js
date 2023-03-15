@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import connectDB from './config/db.js';
 import colors from 'colors';
 import productRoutes from './routes/productRoutes.js'
+import { errorHandler, notFound } from './middleware/middleware.js';
 
 const app = express();
 
@@ -12,6 +13,11 @@ connectDB()
 
 
 app.use('/api/products', productRoutes)
+
+// middleware
+app.use(notFound)
+
+app.use(errorHandler)
 
 app.get('/', (req, res) =>{
     res.send('API is running...')
